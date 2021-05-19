@@ -250,38 +250,115 @@ public class EmbeddedSQL {
    
    public static void Query1(EmbeddedSQL esql){
       // Your code goes here.
-      // ...
-      // ...
+try{
+         String query = "SELECT sname,COUNT(*) FROM suppliers,catalog,parts WHERE parts.pid = catalog.pid AND catalog.sid = suppliers.sid GROUP BY suppliers.sname, suppliers.sid ";
+        // System.out.print("\tEnter cost: $");
+        // String input = in.readLine();
+        // query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println (rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+     
+ // ...
    }//end Query1
 
    public static void Query2(EmbeddedSQL esql){
-      // Your code goes here.
+      try{
+         String query = "SELECT sname,COUNT(*) FROM suppliers,catalog,parts WHERE parts.pid = catalog.pid AND catalog.sid = suppliers.sid GROUP BY suppliers.sname, suppliers.sid HAVING COUNT(*) >= 3 ";
+        // System.out.print("\tEnter cost: $");
+        // String input = in.readLine();
+        // query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println (rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+
+
+ // Your code goes here.
       // ...
       // ...
    }//end Query2
 
    public static void Query3(EmbeddedSQL esql){
-      // Your code goes here.
+      try{
+         String query = "SELECT sname,COUNT(*) FROM suppliers,catalog,parts WHERE parts.pid = catalog.pid AND catalog.sid = suppliers.sid GROUP BY suppliers.sname, suppliers.sid HAVING EVERY(parts.color = 'Green') ";
+        // System.out.print("\tEnter cost: $");
+        // String input = in.readLine();
+        // query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ( rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+
+
+
+ // Your code goes here.
       // ...
       // ...
    }//end Query3
 
    public static void Query4(EmbeddedSQL esql){
-      // Your code goes here.
+      try{
+         String query = "DROP VIEW h; create view h as SELECT catalog.sid from catalog,parts WHERE catalog.pid = parts.pid AND parts.color = 'Green' INTERSECT SELECT catalog.sid from catalog,parts WHERE catalog.pid = parts.pid AND parts.color = 'Red' ; SELECT sname, MAX(cost) from h, catalog, suppliers where h.sid = catalog.sid and catalog.sid = suppliers.sid GROUP BY sname,suppliers.sid";
+        // System.out.print("\tEnter cost: $");
+        // String input = in.readLine();
+        // query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ( rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+
+
+ // Your code goes here.
       // ...
       // ...
    }//end Query4
 
    public static void Query5(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+     try{
+        // String query = "Drop VIEW s; create view s as SELECT FROM Catalog WHERE cost < ";
+         System.out.print("\tEnter cost: $");
+         String input = in.readLine();
+        // query += input;
+//String query = "drop view s; create view as  SELECT pid from catalog where cost < " + input "); SELECT pname from parts where s.pid = parts.pid";
+String query = "select DISTINCT pname from parts WHERE parts.pid IN (SELECT pid from catalog WHERE cost < " + input + ")" ;        
+ int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+ 
+     
+
    }//end Query5
 
    public static void Query6(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+      
+try{
+         System.out.print("\tEnter pname: ");
+         String input = in.readLine();
+         // query += input;
+         String query = "SELECT address from Suppliers WHERE suppliers.sid IN (Select catalog.sid from catalog where pid IN  (Select parts.pid from parts where pname = '" + input + "'))"; 
+        // String input = in.readLine();
+        // query += input;
+
+        int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+
+
+
    }//end Query6
 
 }//end EmbeddedSQL
